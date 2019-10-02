@@ -1,0 +1,93 @@
+Génie logiciel - TP2
+Yves-Roxan FAYE
+MEDYNSKA Maxime
+
+Page 15 : 
+
+make première fois :
+	magarroust2@sciapp14:~/Genie/TP2/projet$ make
+	gcc -c main.c -o main.o
+	gcc -c function.c -o function.o
+	gcc main.o function.o -o example
+
+
+2ème fois :
+	magarroust2@sciapp14:~/Genie/TP2/projet$ make
+	gcc main.o function.o -o example
+
+
+modifier function.c et make :
+	magarroust2@sciapp14:~/Genie/TP2/projet$ make
+	gcc -c function.c -o function.o
+	gcc main.o function.o -o example
+
+make clean : 
+	magarroust2@sciapp14:~/Genie/TP2/projet$ make clean
+	rm -rf *.o
+	rm -rf example
+
+1ère fois make -f Makefile2:
+	magarroust2@sciapp14:~/Genie/TP2/projet$ make -f Makefile2
+	compilation de main.c :
+	gcc -o main.o -c main.c
+	compilation de function.c :
+	gcc -o function.o -c function.c
+	linkage :
+	gcc -o example main.o function.o
+
+2ème fois :
+	magarroust2@sciapp14:~/Genie/TP2/projet$ make -f Makefile2
+	make: rien à faire pour « all ».
+
+Modifier function.h :
+	magarroust2@sciapp14:~/Genie/TP2/projet$ make -f Makefile2
+	compilation de main.c :
+	gcc -o main.o -c main.c
+	linkage :
+	gcc -o example main.o function.o
+
+make -f Makefile2 clean : 
+	magarroust2@sciapp14:~/Genie/TP2/projet$ make -f Makefile2 clean
+	rm -rf *.o example
+
+Sconstruct scons 1 : 
+	magarroust2@sciapp14:~/Genie/TP2/projet$ scons
+	scons: Reading SConscript files ...
+	scons: done reading SConscript files.
+	scons: Building targets ...
+	gcc -o main.o -c main.c
+	gcc -o function.o -c function.c
+	gcc -o example main.o function.o function.h
+	scons: done building targets.
+
+scons 2 :
+	magarroust2@sciapp14:~/Genie/TP2/projet$ scons
+	scons: Reading SConscript files ...
+	scons: done reading SConscript files.
+	scons: Building targets ...
+	scons: `.' is up to date.
+	scons: done building targets.
+
+function.h modifier : 
+	magarroust2@sciapp14:~/Genie/TP2/projet$ scons
+	scons: Reading SConscript files ...
+	scons: done reading SConscript files.
+	scons: Building targets ...
+	gcc -o main.o -c main.c
+	gcc -o function.o -c function.c
+	gcc -o example main.o function.o function.h
+	scons: done building targets.
+
+scons -c :
+	magarroust2@sciapp14:~/Genie/TP2/projet$ scons -c
+	scons: Reading SConscript files ...
+	scons: done reading SConscript files.
+	scons: Cleaning targets ...
+	Removed main.o
+	Removed function.o
+	Removed example
+	scons: done cleaning targets.
+
+
+
+
