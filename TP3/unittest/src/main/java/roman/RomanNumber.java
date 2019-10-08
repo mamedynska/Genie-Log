@@ -1,7 +1,10 @@
 
 package roman;
 
+import java.security.KeyStore.Entry;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public final class RomanNumber extends Number {
@@ -90,7 +93,7 @@ public final class RomanNumber extends Number {
     }
 
     private static int fromRoman(String romanValue) {
-        if(!isUpperCase(romanValue))
+        if (!isUpperCase(romanValue))
             throw new IllegalArgumentException("Pas de minuscule bro");
 
         if (!romanValue.matches(VALIDATION_RE.pattern()))
@@ -130,12 +133,68 @@ public final class RomanNumber extends Number {
         if(value > 3999){
             throw new IllegalArgumentException("Pas au dessus de 3999");
         }
-        return "";
+        
+        Map<Integer, String> tab = new HashMap<Integer, String>();
+        tab.put(1, "I");
+        tab.put(4, "IV");
+        tab.put(5, "V");
+        tab.put(9, "IX");
+        tab.put(10, "X");
+        tab.put(40, "XL");
+        tab.put(50, "L");
+        tab.put(90, "XC");
+        tab.put(100, "C");
+        tab.put(400, "CD");
+        tab.put(500, "D");
+        tab.put(900, "CM");
+        tab.put(1000, "M");
+
+        String res = "";
+        for (java.util.Map.Entry<Integer, String> entry : tab.entrySet()) {
+            while (value >= entry.getKey()) {
+                res += tab.get(entry.getKey());
+                value -= entry.getKey();
+            }
+
+        }
+        return res;
     }
 
+    // Function to convert decimal to Roman Numerals
+String printRoman(int n) 
+{ 
+    
+    Map<Integer, String> tab = new HashMap<Integer,String>();
+    tab.put(1, "I");
+    tab.put(4, "IV");
+    tab.put(5, "V");
+    tab.put(9, "IX");
+    tab.put(10, "X");
+    tab.put(40, "XL");
+    tab.put(50, "L");
+    tab.put(90, "XC");
+    tab.put(100, "C");
+    tab.put(400, "CD");
+    tab.put(500, "D");
+    tab.put(900, "CM");
+    tab.put(1000, "M");
+
+    String res = "";
+    for (java.util.Map.Entry<Integer,String> entry : tab.entrySet()) {
+        while (n >= entry.getKey()){
+            res += tab.get(entry.getKey());
+            n-= entry.getKey();
+        }
+
+    }
+    return res;
+
+    } 
+
+
     private static boolean isUpperCase(String s) {
-        for(char c : s.toCharArray()){
-            if(Character.isLowerCase(c)){
+        for (char c : s.toCharArray()) {
+            if (Character.isLowerCase(c)) {
                 return false;
             }
         }
