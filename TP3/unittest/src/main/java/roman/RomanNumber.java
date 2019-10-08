@@ -89,6 +89,10 @@ public final class RomanNumber extends Number {
     }
 
     public static RomanNumber valueOf(int value) {
+        if (value > 3999 || value <= 0) {
+            throw new IllegalArgumentException();
+        }
+        
         return new RomanNumber(value);
     }
 
@@ -129,7 +133,7 @@ public final class RomanNumber extends Number {
         throw new IllegalArgumentException("something bad happened");
     }
 
-    private static String toRoman(int value) {
+    private static String toRoman1(int value) {
         if(value > 3999){
             throw new IllegalArgumentException("Pas au dessus de 3999");
         }
@@ -154,43 +158,82 @@ public final class RomanNumber extends Number {
             while (value >= entry.getKey()) {
                 res += tab.get(entry.getKey());
                 value -= entry.getKey();
+                System.out.println(value);
             }
 
         }
         return res;
     }
-
-    // Function to convert decimal to Roman Numerals
-String printRoman(int n) 
-{ 
     
-    Map<Integer, String> tab = new HashMap<Integer,String>();
-    tab.put(1, "I");
-    tab.put(4, "IV");
-    tab.put(5, "V");
-    tab.put(9, "IX");
-    tab.put(10, "X");
-    tab.put(40, "XL");
-    tab.put(50, "L");
-    tab.put(90, "XC");
-    tab.put(100, "C");
-    tab.put(400, "CD");
-    tab.put(500, "D");
-    tab.put(900, "CM");
-    tab.put(1000, "M");
+    private static int toRoman2(String R) {
+        int Decimal = 0;
+        char Previous = 0;
 
-    String res = "";
-    for (java.util.Map.Entry<Integer,String> entry : tab.entrySet()) {
-        while (n >= entry.getKey()){
-            res += tab.get(entry.getKey());
-            n-= entry.getKey();
+        for (int x = 0; x < R.length(); x++) {
+            if (R.charAt(x) == 'I')
+                Decimal += 1;
+
+            if (R.charAt(x) == 'V') {
+                System.out.println(Previous);
+                if (Previous == 'I') {
+                    Decimal -= 2;
+                }
+                Decimal += 5;
+            }
+
+            if (R.charAt(x) == 'X') {
+                if (Previous == 'I') {
+                    Decimal -= 2;
+                }
+                Decimal += 10;
+            }
+
+            if (R.charAt(x) == 'L') {
+                if (Previous == 'X') {
+                    Decimal -= 20;
+                }
+                Decimal += 50;
+            }
+
+            if (R.charAt(x) == 'C') {
+                if (Previous == 'X') {
+                    Decimal -= 20;
+                }
+                Decimal += 100;
+            }
+
+            if (R.charAt(x) == 'D') {
+                if (Previous == 'C') {
+                    Decimal -= 200;
+                }
+                Decimal += 500;
+            }
+
+            if (R.charAt(x) == 'M') {
+                if (Previous == 'C') {
+                    Decimal -= 200;
+                }
+                Decimal += 1000;
+            }
+            Previous = R.charAt(x);
         }
+        return Decimal;
 
     }
-    return res;
 
-    } 
+    private static String toRoman(int number) {
 
+        String roman[] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+        int decimal[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+        String romanNumber = "";
+        for (int i = 0; i < 13; i++) {
+            while (number >= decimal[i]) {
+                romanNumber = romanNumber + roman[i];
+                number = number - decimal[i];
+            }
+        }
+       return romanNumber;
+    }
 
     private static boolean isUpperCase(String s) {
         for (char c : s.toCharArray()) {
