@@ -1,10 +1,7 @@
 
 package roman;
 
-import java.security.KeyStore.Entry;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public final class RomanNumber extends Number {
@@ -132,95 +129,8 @@ public final class RomanNumber extends Number {
             return 1 + fromRoman(romanValue.substring(1));
         throw new IllegalArgumentException("something bad happened");
     }
-
-    private static String toRoman1(int value) {
-        if(value > 3999){
-            throw new IllegalArgumentException("Pas au dessus de 3999");
-        }
-        
-        Map<Integer, String> tab = new HashMap<Integer, String>();
-        tab.put(1, "I");
-        tab.put(4, "IV");
-        tab.put(5, "V");
-        tab.put(9, "IX");
-        tab.put(10, "X");
-        tab.put(40, "XL");
-        tab.put(50, "L");
-        tab.put(90, "XC");
-        tab.put(100, "C");
-        tab.put(400, "CD");
-        tab.put(500, "D");
-        tab.put(900, "CM");
-        tab.put(1000, "M");
-
-        String res = "";
-        for (java.util.Map.Entry<Integer, String> entry : tab.entrySet()) {
-            while (value >= entry.getKey()) {
-                res += tab.get(entry.getKey());
-                value -= entry.getKey();
-                System.out.println(value);
-            }
-
-        }
-        return res;
-    }
     
-    private static int toRoman2(String R) {
-        int Decimal = 0;
-        char Previous = 0;
-
-        for (int x = 0; x < R.length(); x++) {
-            if (R.charAt(x) == 'I')
-                Decimal += 1;
-
-            if (R.charAt(x) == 'V') {
-                System.out.println(Previous);
-                if (Previous == 'I') {
-                    Decimal -= 2;
-                }
-                Decimal += 5;
-            }
-
-            if (R.charAt(x) == 'X') {
-                if (Previous == 'I') {
-                    Decimal -= 2;
-                }
-                Decimal += 10;
-            }
-
-            if (R.charAt(x) == 'L') {
-                if (Previous == 'X') {
-                    Decimal -= 20;
-                }
-                Decimal += 50;
-            }
-
-            if (R.charAt(x) == 'C') {
-                if (Previous == 'X') {
-                    Decimal -= 20;
-                }
-                Decimal += 100;
-            }
-
-            if (R.charAt(x) == 'D') {
-                if (Previous == 'C') {
-                    Decimal -= 200;
-                }
-                Decimal += 500;
-            }
-
-            if (R.charAt(x) == 'M') {
-                if (Previous == 'C') {
-                    Decimal -= 200;
-                }
-                Decimal += 1000;
-            }
-            Previous = R.charAt(x);
-        }
-        return Decimal;
-
-    }
-
+   
     private static String toRoman(int number) {
 
         String roman[] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
